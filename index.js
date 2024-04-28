@@ -42,9 +42,39 @@ async function run() {
       res.send(result);
     });
 
-    app.put("/allProducts", (req, res) => {
-      const 
-    })
+    app.put("/allProducts/:id", async (req, res) => {
+      const updateCraftInfo = req.body;
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateCraft = {
+        $set: {
+          product_name: updateCraftInfo.product_name,
+          category: updateCraftInfo.category,
+          photoURL: updateCraftInfo.photoURL,
+          price: updateCraftInfo.price,
+          time: updateCraftInfo.time,
+          stock: updateCraftInfo.stock,
+          customize: updateCraftInfo.customize,
+          rating: updateCraftInfo.rating,
+          product_details: updateCraftInfo.product_details,
+        },
+      };
+      const result = await ceramicsAndPotteryCollection.updateOne(
+        filter,
+        updateCraft,
+        options
+      );
+      res.send(result);
+    });
+
+    app.delete("/allProducts/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const query = { _id: new ObjectId(id) };
+      const result = await ceramicsAndPotteryCollection.deleteOne(query);
+      res.send(result);
+    });
 
     app.get("/allProducts", async (req, res) => {
       const result = await ceramicsAndPotteryCollection.find().toArray();
