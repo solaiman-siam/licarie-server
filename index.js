@@ -31,14 +31,23 @@ async function run() {
       .db("ceramicsAndPotteryDB")
       .collection("products");
 
-    // const categoriesCollection = client
-    //   .db("ceramicsAndPotteryDB")
-    //   .collection("categories");
+    const categoriesCollection = client
+      .db("ceramicsAndPotteryDB")
+      .collection("categories");
 
     app.post("/allProducts", async (req, res) => {
       const newProduct = req.body;
       const result = await ceramicsAndPotteryCollection.insertOne(newProduct);
       console.log(newProduct);
+      res.send(result);
+    });
+
+    app.put("/allProducts", (req, res) => {
+      const 
+    })
+
+    app.get("/allProducts", async (req, res) => {
+      const result = await ceramicsAndPotteryCollection.find().toArray();
       res.send(result);
     });
 
@@ -49,18 +58,10 @@ async function run() {
       res.send(result);
     });
 
-    // app.get("/categories/:id", async (req, res) => {
-    //   const category_name = req.params.id;
-    //   const query = { category_name: new ObjectId(category_name) };
-    //   const result = await categoriesCollection.findOne(query);
-    //   res.send(result);
-    //   console.log(category_name);
-    // });
-
-    // app.get("/categories", async (req, res) => {
-    //   const query = await categoriesCollection.find().toArray();
-    //   res.send(query);
-    // });
+    app.get("/categories", async (req, res) => {
+      const query = await categoriesCollection.find().toArray();
+      res.send(query);
+    });
 
     await client.db("admin").command({ ping: 1 });
     console.log(
