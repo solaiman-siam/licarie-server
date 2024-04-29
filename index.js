@@ -66,7 +66,6 @@ async function run() {
 
     app.delete("/allProducts/:id", async (req, res) => {
       const id = req.params.id;
-      console.log(id);
       const query = { _id: new ObjectId(id) };
       const result = await ceramicsAndPotteryCollection.deleteOne(query);
       res.send(result);
@@ -79,14 +78,12 @@ async function run() {
 
     app.get("/userProducts/:email", async (req, res) => {
       const email = req.params.email;
-      console.log(email);
       const query = { email: email };
       const result = await ceramicsAndPotteryCollection.find(query).toArray();
       res.send(result);
     });
     app.get("/filterProducts/:string", async (req, res) => {
       const string = req.params.string;
-      console.log(object);
       const query = { customize: string };
       const result = await ceramicsAndPotteryCollection.find(query).toArray();
       res.send(result);
